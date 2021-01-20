@@ -1,0 +1,19 @@
+
+from pyspark.sql.types import *
+from pyspark.sql.functions import *
+
+expectedSchema = StructType([
+  StructField("body", StringType(), True),
+  StructField("date", TimestampType(), True),
+  StructField("id", StringType(), True),
+  StructField("link", StringType(), True),
+])
+
+
+
+
+MLsparkd = MLsparkd \
+  .withColumn("body", MLsparkd["body"].cast("string")) \
+  .withColumn("date", MLsparkd["date"].cast("timestamp")) \
+  .withColumn("id", MLsparkd["id"].cast("string")) \
+  .withColumn("link", MLsparkd["link"].cast("string")) \
