@@ -1,0 +1,18 @@
+import pyspark
+
+spark = pyspark.sql.SparkSession.builder.appName('ijoom9n9jmhge4e1546e5babc').getOrCreate()
+
+readConfig = {
+    "Endpoint": "https://endpoint.documents.azure.com:443/",
+    "Masterkey": "AccessKey", #again data like this should ideally be stored in secure place like Key Vault.
+    "Database": "NewDoctryDatabase",
+    "Collection": "newcontainertest",
+    "query_custom": "SELECT newcontainertest.date, newcontainertest.id, newcontainertest.link, newcontainertest.body FROM newcontainertest" 
+}
+
+# Connect via azure-cosmosdb-spark to create Spark DataFrame
+MLsparkd = spark.read.format("com.microsoft.azure.cosmosdb.spark").options(**readConfig).load()
+MLsparkd.count()
+
+
+display(MLsparkd)
